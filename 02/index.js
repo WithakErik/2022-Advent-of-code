@@ -38,8 +38,8 @@ const score2 = input
       case "Y":
         // Should Draw
         return `${them} ${map[them].draw}`;
-      // Should Win
       default:
+        // Should Win
         return `${them} ${map[them].lose}`;
     }
   })
