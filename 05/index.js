@@ -22,8 +22,6 @@ const parsedMoves = moves.split("\n").reduce((all, current) => {
   return all;
 }, []);
 
-console.log(parsedMoves[parsedMoves.length - 1]);
-
 const finalStacks = parsedMoves.reduce((all, { size, fromStack, toStack }) => {
   all[toStack].unshift(...all[fromStack].splice(0, size).reverse());
   return all;
