@@ -15,9 +15,9 @@ const calculateFolderStuff = ({ path, linesLeft }) => {
     const fileSize = Number(line.match(/\d+/)[0]);
     if (structure[path]) {
       // We already have this top most directory
-      structure[path].size += fileSize;
+      structure[path] += fileSize;
     } else {
-      structure[path] = { size: fileSize };
+      structure[path] = fileSize;
     }
     return calculateFolderStuff({
       linesLeft,
@@ -52,7 +52,7 @@ const calculateFolderStuff = ({ path, linesLeft }) => {
 calculateFolderStuff({ linesLeft: input.split("\n") });
 console.log(structure);
 
-const answer = Object.values(structure).reduce((total, { size }) => {
+const answer = Object.values(structure).reduce((total, size) => {
   if (size <= MAX_SIZE) {
     total += size;
   }
