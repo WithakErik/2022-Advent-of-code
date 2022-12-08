@@ -1,4 +1,4 @@
-module.exports = `$ cd /
+$ cd /
 $ ls
 dir dtcfhsm
 dir hblzj
@@ -1027,4 +1027,4 @@ $ ls
 dir sgffh
 $ cd sgffh
 $ ls
-76321 psbpb.sqj`;
+76321 psbpb.sqj
