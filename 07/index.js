@@ -14,12 +14,14 @@ const calculateFolderStuff = ({ path, linesLeft }) => {
   if (line.match(/\d+/)) {
     // We have file size info
     const fileSize = Number(line.match(/\d+/)[0]);
+
+    // Check if we already have this path in our structure object
     if (structure[path]) {
-      // We already have this top most directory
       structure[path] += fileSize;
     } else {
       structure[path] = fileSize;
     }
+
     return calculateFolderStuff({
       linesLeft,
       path,
@@ -31,6 +33,7 @@ const calculateFolderStuff = ({ path, linesLeft }) => {
     const directories = path.split("/");
     directories.pop();
     const newPath = directories.join("/");
+
     return calculateFolderStuff({ path: newPath, linesLeft });
   }
 
@@ -41,6 +44,7 @@ const calculateFolderStuff = ({ path, linesLeft }) => {
     const newPath = `${isRoot || path === "/" ? "" : path}/${
       isRoot ? "" : directory
     }`;
+
     return calculateFolderStuff({
       path: newPath,
       linesLeft,
