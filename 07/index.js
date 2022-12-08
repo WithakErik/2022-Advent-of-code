@@ -10,11 +10,9 @@ const addFileSizeToDirectoryAndParentDirectories = ({ fileSize, path }) => {
   console.log(parentDirectories);
 
   parentDirectories.forEach((directory) => {
+    // Grab the path name up to and including the directory
     const currentPath =
       path.substring(0, path.indexOf(directory) + directory.length) || "/";
-
-    console.log("path", path);
-    console.log("currentPath", currentPath, "\n");
 
     // Check if we already have this path in our structure object
     if (structure[currentPath]) {
@@ -82,6 +80,7 @@ console.log(answer);
 
 // Part 2
 const answer2 = Object.values(structure).reduce((total, size) => {
+  console.log(total, size);
   return size >= UNUSED_NEEDED && size < total ? size : total;
 }, Infinity);
 
