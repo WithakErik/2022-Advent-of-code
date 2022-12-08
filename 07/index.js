@@ -2,7 +2,28 @@
 
 const input = require("./input.js");
 const MAX_SIZE = 100_000;
+const UNUSED_NEEDED = 30_000_000 - 21_618_835;
 const structure = {};
+
+const addFileSizeToDirectoryAndParentDirectories = ({ fileSize, path }) => {
+  const parentDirectories = path.split("/");
+  console.log(parentDirectories);
+
+  parentDirectories.forEach((directory) => {
+    const currentPath =
+      path.substring(0, path.indexOf(directory) + directory.length) || "/";
+
+    console.log("path", path);
+    console.log("currentPath", currentPath, "\n");
+
+    // Check if we already have this path in our structure object
+    if (structure[currentPath]) {
+      structure[currentPath] += fileSize;
+    } else {
+      structure[currentPath] = fileSize;
+    }
+  });
+};
 
 const calculateFolderStuff = ({ path, linesLeft }) => {
   if (!linesLeft.length) {
@@ -15,12 +36,7 @@ const calculateFolderStuff = ({ path, linesLeft }) => {
     // We have file size info
     const fileSize = Number(line.match(/\d+/)[0]);
 
-    // Check if we already have this path in our structure object
-    if (structure[path]) {
-      structure[path] += fileSize;
-    } else {
-      structure[path] = fileSize;
-    }
+    addFileSizeToDirectoryAndParentDirectories({ fileSize, path });
 
     return calculateFolderStuff({
       linesLeft,
@@ -62,6 +78,11 @@ const answer = Object.values(structure).reduce((total, size) => {
   return size <= MAX_SIZE ? total + size : total;
 }, 0);
 
-console.log(answer); // 1538808 = incorrect
+console.log(answer);
 
 // Part 2
+const answer2 = Object.values(structure).reduce((total, size) => {
+  return size >= UNUSED_NEEDED && size < total ? size : total;
+}, Infinity);
+
+console.log(answer2);
